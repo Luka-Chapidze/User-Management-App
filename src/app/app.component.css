@@ -1,7 +1,10 @@
 .wrapper {
   margin: 50px;
   background-color: #ececec9f;
+  height: -webkit-max-content;
+  height: -moz-max-content;
   height: max-content;
   border-radius: 20px;
   padding: 20px;
 }
+/*# sourceMappingURL=app.component.css.map */

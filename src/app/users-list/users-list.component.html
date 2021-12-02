@@ -1,0 +1,177 @@
+<div class="users-container">
+  <div class="forms-wrapper">
+    <form #form="ngForm" class="search-form">
+      <div class="fom-container">
+        <a routerLink="/user/add"
+          ><button class="btn btn-primary add-new-button" type="button">
+            Add New User
+          </button></a
+        >
+      </div>
+      <div class="form-container">
+        <input
+          type="email"
+          name="email-search"
+          id="email-search"
+          placeholder="Search By Email"
+          class="form-control"
+          email
+          [(ngModel)]="emailSearch"
+          (ngModelChange)="onFormChange()"
+        />
+      </div>
+      <div class="form-container">
+        <input
+          type="text"
+          name="id-search"
+          id="id-search"
+          placeholder="Search by ID"
+          class="form-control"
+          [(ngModel)]="idSearch"
+          (ngModelChange)="onFormChange()"
+        />
+      </div>
+      <div class="form-container">
+        <input
+          type="text"
+          name="name-search"
+          id="name-search"
+          placeholder="Search by name"
+          class="form-control"
+          [(ngModel)]="nameSearch"
+          (ngModelChange)="onFormChange()"
+        />
+      </div>
+      <div class="form-container">
+        <input
+          type="text"
+          name="lastname-search"
+          id="lastname-search"
+          placeholder="Search By Lastname"
+          class="form-control"
+          [(ngModel)]="lastnameSearch"
+          (ngModelChange)="onFormChange()"
+        />
+      </div>
+      <div class="form-container">
+        <label for="birth-search-start-date">Birth date from</label>
+        <input
+          type="date"
+          name="birth-search-start-date"
+          id="birth-search-start-date"
+          class="form-control"
+          [(ngModel)]="birthStartSearch"
+          (ngModelChange)="onFormChange()"
+        />
+        <label for="birth-search-start-date">Birth date to</label>
+        <input
+          type="date"
+          name="birth-search-end-date"
+          id="birth-search-end-date"
+          class="form-control"
+          placeholder="End"
+          [(ngModel)]="birthEndSearch"
+          (ngModelChange)="onFormChange()"
+        />
+      </div>
+      <button
+        class="btn btn-primary form-clear"
+        (click)="onClear(form)"
+        [disabled]="form.untouched"
+      >
+        Clear
+      </button>
+    </form>
+  </div>
+
+  <div class="users-table-wrapper">
+    <table class="table table-striped users-table" style="overflow-x: auto">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Lastname</th>
+          <th>Email</th>
+          <th>ID</th>
+          <th>Birth Day</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let user of users
+              | searchFilter
+                : {
+                    name: nameSearch,
+                    lastname: lastnameSearch,
+                    email: emailSearch,
+                    id: idSearch,
+                    birthStart: birthStartSearch,
+                    birthEnd: birthEndSearch
+                  }
+              | paginateData
+                : {
+                    usersPerPage: this.usersPerPage,
+                    recentPage: this.recentPage
+                  };
+            let i = index
+          "
+        >
+          <td>{{ users.indexOf(user) + 1 }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.lastname }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.idNumber }}</td>
+          <td>{{ user.birthDate | date: "dd/MM/yyyy" }}</td>
+          <td>
+            <a
+              style="color: #fff; text-decoration: none"
+              [routerLink]="['user', user.id]"
+            >
+              <button type="button" class="btn btn-primary">Edit</button>
+            </a>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="onDeleteUser(user.id)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li
+          class="page-item"
+          *ngFor="
+            let page of users
+              | searchFilter
+                : {
+                    name: nameSearch,
+                    lastname: lastnameSearch,
+                    email: emailSearch,
+                    id: idSearch,
+                    birthStart: birthStartSearch,
+                    birthEnd: birthEndSearch
+                  }
+              | paginate
+                : {
+                    usersPerPage: this.usersPerPage
+                  }
+          "
+        >
+          <a
+            class="page-link"
+            style="cursor: pointer"
+            (click)="onPageChange(page)"
+            >{{ page }}</a
+          >
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

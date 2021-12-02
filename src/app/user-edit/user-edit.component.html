@@ -1,0 +1,77 @@
+<div class="user-edit-wrapper">
+  <form #form="ngForm" class="user-edit-form">
+    <div>
+      <label for="name-edit">Edit Name</label>
+      <input
+        type="text"
+        name="name-edit"
+        id="name-edit"
+        class="form-control"
+        [(ngModel)]="name"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="lastname-edit">Edit Lastname</label>
+      <input
+        type="text"
+        name="lastname-edit"
+        id="lastname-edit"
+        class="form-control"
+        [(ngModel)]="lastname"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="email-edit">Edit Email</label>
+      <input
+        type="text"
+        name="email-edit"
+        id="email-edit"
+        class="form-control"
+        [(ngModel)]="email"
+        required
+        email
+      />
+    </div>
+    <div class="form-group">
+      <label for="id-edit">Edit ID</label>
+      <input
+        #id="ngModel"
+        type="text"
+        name="id-edit"
+        id="id-edit"
+        class="form-control"
+        [(ngModel)]="idNumber"
+        required
+        minlength="11"
+        maxlength="11"
+      />
+      <div *ngIf="idNumber.length !== 11 && id.touched">
+        <p style="color: red; font-size: 12px">
+          ID Number Length Must Be 11 Characters Long
+        </p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="birth-date-edit">Edit Birth Date</label>
+      <input
+        type="date"
+        name="birth-date-edit"
+        id="birth-date-edit"
+        class="form-control"
+        [(ngModel)]="birthDate"
+        required
+      />
+    </div>
+    <div class="form-group user-edit-save">
+      <button
+        class="btn btn-primary user-edit-save-btn"
+        (click)="onUserSave()"
+        [disabled]="form.invalid"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</div>
